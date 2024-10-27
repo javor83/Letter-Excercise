@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PascalCase", "PascalCase.csproj", "{D0AF32AF-C33B-42AA-A3BA-97EA10F5CB87}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D0AF32AF-C33B-42AA-A3BA-97EA10F5CB87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0AF32AF-C33B-42AA-A3BA-97EA10F5CB87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0AF32AF-C33B-42AA-A3BA-97EA10F5CB87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0AF32AF-C33B-42AA-A3BA-97EA10F5CB87}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1E0C568-AEEB-4390-90F6-A349D0673D41}
+	EndGlobalSection
+EndGlobal
