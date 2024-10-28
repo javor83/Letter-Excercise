@@ -43,6 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Stars.cs" />
+    <Compile Include="PhoneNums.cs" />
+    <Compile Include="PCase.cs" />
+    <Compile Include="PlanetList.cs" />
+    <Compile Include="enum_AttackType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
