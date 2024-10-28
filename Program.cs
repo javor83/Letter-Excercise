@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace PascalCase
 {
@@ -10,86 +11,193 @@ namespace PascalCase
     {
         static void Main(string[] args)
         {
-            
-            Stars commands = new Stars();
             string[] list = new string[]
-                {
+               {
                     "STCDoghudd4=63333$D$0A53333",
                     "EHfsytsnhf?8555&I&2C9555SR"
-                };
-            foreach (var k in list)
-            {
-                Console.WriteLine(commands.print(k));
-                Console.WriteLine(commands.AttackType(commands.print(k)));
-            }
+               };
+            Stars commands = new Stars(list);
+
+            commands.Index();
         }
     }
 
+
+    
     public class Stars
     {
-        public string print(string input)
+        private int attack_counter = 0;
+        private int destroy_counter = 0;
+        private string[] star_list = null;
+
+
+
+        //****************************************************************************************
+
+        public Stars(string[] list)
+        {
+            this.star_list = list;
+            this.CountAttackType(ref this.attack_counter, ref this.destroy_counter);
+        }
+        //****************************************************************************************
+
+        public void Index()
+        {
+            this.PrintAttackOnly();
+            this.PrintDestroyOnly();
+        }
+
+        //****************************************************************************************
+        private void PrintAttackOnly()
+        {
+            
+            Console.WriteLine($"Attacked planets : {this.attack_counter}");
+            foreach (string attack in this.star_list)
+            {
+                string[] parts = this.PartsArmy(this.DecryptMessage(attack));
+                if (this.AttackType(parts) == "A")
+                {
+                    Console.WriteLine($"-> {PlanetName(parts)}");
+                }
+            }
+        }
+        //****************************************************************************************
+        private void PrintDestroyOnly()
+        {
+            Console.WriteLine($"Destroyed planets : {this.destroy_counter}");
+            foreach (string attack in this.star_list)
+            {
+                string[] parts = this.PartsArmy(this.DecryptMessage(attack));
+                if (this.AttackType(parts) == "D")
+                {
+                    Console.WriteLine($"-> {PlanetName(parts)}");
+                }
+            }
+        }
+
+
+
+
+
+        #region privates
+        //****************************************************************************************
+        private void CountAttackType(ref int a, ref int d)
+        {
+            foreach (string attack in this.star_list)
+            {
+                string[] parts = this.PartsArmy(this.DecryptMessage(attack));
+                string attack_type = this.AttackType(parts);
+                switch (attack_type)
+                {
+                    case "A":
+                        a++;
+                        break;
+                    case "D":
+                        d++;
+                        break;
+                }
+
+
+            }
+        }
+
+
+        //****************************************************************************************
+        private string PlanetName(string[] parts)
+        {
+            int posDveTi = parts[0].IndexOf(':');
+            int posAt = parts[0].IndexOf('@')+1;
+
+            string subs = parts[0].Substring(posAt, posDveTi - posAt);
+
+          
+
+            char[] query = subs.ToArray().Where(x => Char.IsLetter(x)).Select(x=>x).ToArray();
+
+            string result = new string(query);
+            return result;
+        }
+        //****************************************************************************************
+
+        private int Population(string[] parts)
+        {
+            int result = int.Parse(parts[0].Substring(parts[0].IndexOf(':') + 1));
+            return result;
+        }
+
+        //****************************************************************************************
+        private string DecryptMessage(string input)
         {
             char[] result = new char[input.Length];
             for (int i = 0; i < input.Length; i++)
             {
                 result[i] =
 
-                        m(ascii(input[i]), cprint(input));
-                    
+                        ascii_reduce(ascii(input[i]), star_letter_counter(input));
+
             }
             return new string(result);
         }
-
-        public string AttackType(string decr_message)
+        //****************************************************************************************
+        private string[] PartsArmy(string input)
         {
-            string result = "";
-            string[] parts = decr_message.Split(new char[] { '!' }, StringSplitOptions.None);
-            switch (parts[1])
-            {
-                case "A":
-                    result = string.Format("Attack with {0} soldiers", parts[2].Substring(2));
-                    break;
-                case "D":
-                    result = string.Format("Destroy -> {0}", parts[2].Substring(2));
-                    break;
-            }
+            return input.Split(new char[] { '!' }, StringSplitOptions.None);
+        }
+        //****************************************************************************************
+        private string AttackType(string[] parts)
+        {
+            string result = parts[1];
+           
+            return result;
+        }
+        //****************************************************************************************
+        private int ArmyCount(string[] parts)
+        {
+
+
+            char[] char_list = parts[2].Substring(parts[2].IndexOf("->") + 1).ToArray();
+            var query = (from x in char_list
+                         where Char.IsDigit(x)
+                         select x).ToArray();
+            int result = int.Parse(new string(query));
 
             return result;
-
-
-            
         }
-
+        //****************************************************************************************
         private int ascii(char input)
         {
             return (int)input;
-           
-        }
 
-        private char m(int ascii_code, int star_letter_count)
+        }
+        //****************************************************************************************
+        private char ascii_reduce(int ascii_code, int star_letter_count)
         {
             char result = Convert.ToChar(ascii_code - star_letter_count);
             return result;
         }
-
-        private int cprint(string key )
+        //****************************************************************************************
+        private int star_letter_counter(string key)
         {
             int result = 0;
             char[] allow = new char[] { 's', 't', 'a', 'r' };
             //
             for (int i = 0; i < key.Length; i++)
             {
-                if (Array.IndexOf<char>(allow, Char.ToLower(key[i]))>-1)
+                if (Array.IndexOf<char>(allow, Char.ToLower(key[i])) > -1)
                 {
                     result++;
                 }
             }
             return result;
 
-            
+
 
 
         }
+        //****************************************************************************************
+        #endregion
+
+
 
 
     }
