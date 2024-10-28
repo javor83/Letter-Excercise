@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
+using static System.Net.WebRequestMethods;
 
 namespace PascalCase
 {
@@ -14,8 +15,18 @@ namespace PascalCase
             string[] list = new string[]
                {
                     "STCDoghudd4=63333$D$0A53333",
+                    "EHfsytsnhf?8555&I&2C9555SR",
+                    @"tt(""DGsvywgerx>5444444444%H%1bB9444",
+                    "GQhrr|A977777(HTTT",
                     "EHfsytsnhf?8555&I&2C9555SR"
+
+
+
+
                };
+
+        
+
             Stars commands = new Stars(list);
 
             commands.Index();
@@ -44,7 +55,7 @@ namespace PascalCase
         public void Index()
         {
             this.PrintAttackOnly();
-            this.PrintDestroyOnly();
+            //this.PrintDestroyOnly();
         }
 
         //****************************************************************************************
@@ -55,7 +66,7 @@ namespace PascalCase
             foreach (string attack in this.star_list)
             {
                 string[] parts = this.PartsArmy(this.DecryptMessage(attack));
-                if (this.AttackType(parts) == "A")
+                //if (this.AttackType(parts) == "A")
                 {
                     Console.WriteLine($"-> {PlanetName(parts)}");
                 }
